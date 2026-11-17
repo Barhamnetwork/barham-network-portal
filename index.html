@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Barham Network | WiFi Portal</title>
 
 <style>
@@ -13,88 +14,170 @@ box-sizing: border-box;
 body {
 margin: 0;
 font-family: Arial, sans-serif;
-background: #f3f6fa;
-color: #222;
+background: #f3f6fb;
+color: #17233c;
 }
 
 header {
-background: #092b50;
+background: #10264b;
 color: white;
 text-align: center;
-padding: 35px 15px;
+padding: 28px 15px;
 }
 
 header h1 {
 margin: 0;
-font-size: 30px;
+font-size: 29px;
 }
 
 header p {
-margin-bottom: 0;
-color: #d7e8ff;
+margin: 8px 0 0;
+color: #d8e5ff;
 }
 
 .container {
-max-width: 650px;
+max-width: 850px;
 margin: 25px auto;
-padding: 15px;
+padding: 0 15px;
 }
 
-.card {
+.section {
 background: white;
 padding: 22px;
-margin-bottom: 20px;
 border-radius: 12px;
-box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+margin-bottom: 20px;
+box-shadow: 0 3px 12px rgba(0,0,0,0.06);
 }
 
 h2 {
-color: #092b50;
+color: #10264b;
 margin-top: 0;
 }
 
-select {
-width: 100%;
-padding: 14px;
-border: 1px solid #ccc;
-border-radius: 7px;
-font-size: 16px;
-background: white;
-}
-
-.package {
-display: flex;
-justify-content: space-between;
-padding: 13px 0;
-border-bottom: 1px solid #eee;
-}
-
-.price {
-color: #087c43;
+label {
+display: block;
+margin: 14px 0 7px;
 font-weight: bold;
 }
 
-button {
+select, input {
 width: 100%;
-background: #092b50;
-color: white;
-border: none;
-padding: 14px;
+padding: 13px;
+border: 1px solid #ccd4e0;
 border-radius: 7px;
 font-size: 16px;
-margin-top: 15px;
+}
+
+.packages {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+gap: 14px;
+}
+
+.package {
+border: 1px solid #dce3ed;
+padding: 17px;
+border-radius: 10px;
+background: #fff;
+}
+
+.package h3 {
+margin: 0 0 10px;
+color: #10264b;
+}
+
+.price {
+font-size: 24px;
+font-weight: bold;
+color: #087a52;
+margin: 10px 0;
+}
+
+.package p {
+margin: 6px 0;
+font-size: 14px;
+}
+
+button {
+border: none;
+border-radius: 7px;
+padding: 13px 17px;
+font-size: 15px;
+font-weight: bold;
 cursor: pointer;
 }
 
+.choose {
+width: 100%;
+background: #10264b;
+color: white;
+margin-top: 12px;
+}
+
+.primary {
+width: 100%;
+background: #087a52;
+color: white;
+margin-top: 18px;
+}
+
+.copy {
+background: #10264b;
+color: white;
+margin-top: 12px;
+width: 100%;
+}
+
 .whatsapp {
-background: #168b50;
+background: #20bd62;
+color: white;
+}
+
+.bank-box {
+background: #edf3ff;
+padding: 17px;
+border-radius: 9px;
+line-height: 1.8;
+}
+
+.bank-box strong {
+color: #10264b;
+}
+
+.notice {
+background: #fff8df;
+padding: 13px;
+border-radius: 8px;
+font-size: 14px;
+line-height: 1.6;
+margin-top: 15px;
 }
 
 footer {
+background: #10264b;
+color: white;
 text-align: center;
 padding: 25px;
-color: #777;
-font-size: 13px;
+margin-top: 35px;
+font-size: 14px;
+}
+
+.floating-whatsapp {
+position: fixed;
+right: 18px;
+bottom: 20px;
+background: #20bd62;
+color: white;
+padding: 15px 19px;
+border-radius: 35px;
+text-decoration: none;
+font-weight: bold;
+box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+z-index: 1000;
+}
+
+.hidden {
+display: none;
 }
 </style>
 </head>
@@ -104,106 +187,294 @@ font-size: 13px;
 <header>
 <h1>BARHAM NETWORK</h1>
 <p>Fast. Reliable. Affordable.</p>
-<p>Your trusted hostel WiFi provider</p>
+<p>Quality Internet for Hostel Students</p>
 </header>
 
 <div class="container">
 
-<div class="card">
-<h2>Welcome!</h2>
-<p>Welcome to Barham Network. Select your hostel below to view available WiFi packages and connection information.</p>
+<div class="section">
+<h2>Welcome to Barham Network</h2>
+<p>Select your hostel below to view available WiFi packages and payment details.</p>
 
-<select id="hostel" onchange="showHostel()">
-<option value="">Select Your Hostel</option>
+<label for="hostel">Select Your Hostel</label>
+
+<select id="hostel" onchange="changeHostel()">
+<option value="">Choose Hostel</option>
 <option value="Heritage Hostel">Heritage Hostel</option>
 <option value="Awesome Hostel">Awesome Hostel</option>
 </select>
 </div>
 
-<div class="card" id="packages" style="display:none;">
-<h2 id="hostelName"></h2>
-<p>Available WiFi Packages</p>
+<div id="packageSection" class="section hidden">
+
+<h2>Available WiFi Packages</h2>
+
+<div class="packages">
 
 <div class="package">
-<span>1GB</span>
-<span class="price">₦300</span>
-</div>
-
-<div class="package">
-<span>5GB</span>
-<span class="price">₦1,000</span>
-</div>
-
-<div class="package">
-<span>20GB</span>
-<span class="price">₦3,000</span>
+<h3>Starter</h3>
+<div class="price">₦300</div>
+<p>2GB Data</p>
+<p>30 Days Validity</p>
+<p>50 Devices</p>
+<button class="choose" onclick="selectPackage('₦300','2GB','30 Days','50 Devices')">Choose Package</button>
 </div>
 
 <div class="package">
-<span>40GB</span>
-<span class="price">₦5,000</span>
+<h3>Basic</h3>
+<div class="price">₦1,000</div>
+<p>7GB Data</p>
+<p>30 Days Validity</p>
+<p>50 Devices</p>
+<button class="choose" onclick="selectPackage('₦1,000','7GB','30 Days','50 Devices')">Choose Package</button>
 </div>
 
 <div class="package">
-<span>90GB</span>
-<span class="price">₦10,000</span>
+<h3>Standard</h3>
+<div class="price">₦3,000</div>
+<p>30GB Data</p>
+<p>30 Days Validity</p>
+<p>50 Devices</p>
+<button class="choose" onclick="selectPackage('₦3,000','30GB','30 Days','50 Devices')">Choose Package</button>
 </div>
 
 <div class="package">
-<span>24 Hours Unlimited</span>
-<span class="price">₦800</span>
+<h3>Popular</h3>
+<div class="price">₦5,000</div>
+<p>60GB Data</p>
+<p>30 Days Validity</p>
+<p>50 Devices</p>
+<button class="choose" onclick="selectPackage('₦5,000','60GB','30 Days','50 Devices')">Choose Package</button>
 </div>
 
 <div class="package">
-<span>30 Days Unlimited</span>
-<span class="price">₦40,000</span>
+<h3>Premium</h3>
+<div class="price">₦10,000</div>
+<p>120GB Data</p>
+<p>30 Days Validity</p>
+<p>50 Devices</p>
+<button class="choose" onclick="selectPackage('₦10,000','120GB','30 Days','50 Devices')">Choose Package</button>
 </div>
 
-<button onclick="contactSupport()">Purchase / Make Enquiry</button>
+<div class="package">
+<h3>Super Premium</h3>
+<div class="price">₦20,000</div>
+<p>200GB Data</p>
+<p>30 Days Validity</p>
+<p>50 Devices</p>
+<button class="choose" onclick="selectPackage('₦20,000','200GB','30 Days','50 Devices')">Choose Package</button>
 </div>
 
-<div class="card">
+<div class="package">
+<h3>Monthly Unlimited</h3>
+<div class="price">₦30,000</div>
+<p>Unlimited Data</p>
+<p>30 Days Validity</p>
+<p>3 Devices</p>
+<button class="choose" onclick="selectPackage('₦30,000','Unlimited','30 Days','3 Devices')">Choose Package</button>
+</div>
+
+<div class="package">
+<h3>Daily Unlimited</h3>
+<div class="price">₦800</div>
+<p>Unlimited Data</p>
+<p>24 Hours Validity</p>
+<p>1 Device</p>
+<button class="choose" onclick="selectPackage('₦800','Unlimited','24 Hours','1 Device')">Choose Package</button>
+</div>
+
+</div>
+</div>
+
+<div id="paymentSection" class="section hidden">
+
+<h2>Payment Information</h2>
+
+<p>Your selected package:</p>
+
+<div class="bank-box">
+<strong>Hostel:</strong> <span id="selectedHostel"></span><br>
+<strong>Package:</strong> <span id="selectedPrice"></span><br>
+<strong>Data:</strong> <span id="selectedData"></span><br>
+<strong>Validity:</strong> <span id="selectedValidity"></span><br>
+<strong>Devices:</strong> <span id="selectedDevices"></span>
+</div>
+
+<h3>Make Your Bank Transfer</h3>
+
+<div class="bank-box">
+<strong>Bank:</strong> <span id="bankName"></span><br>
+<strong>Account Name:</strong> <span id="accountName"></span><br>
+<strong>Account Number:</strong>
+<span id="accountNumber"></span>
+
+<button class="copy" onclick="copyAccount()">Copy Account Number</button>
+</div>
+
+<div class="notice">
+Please transfer the exact amount for your selected package.
+After payment, complete the form below to notify Barham Network.
+Your payment will be verified manually before your WiFi voucher is issued.
+</div>
+
+<h3>Your Details</h3>
+
+<label for="studentName">Your Full Name</label>
+<input type="text" id="studentName" placeholder="Enter your name">
+
+<label for="studentPhone">Your Phone Number</label>
+<input type="tel" id="studentPhone" placeholder="Enter your phone number">
+
+<button class="primary" onclick="confirmPayment()">
+I've Made Payment - Confirm on WhatsApp
+</button>
+
+</div>
+
+<div class="section">
 <h2>How to Connect</h2>
 <p>1. Select your hostel.</p>
 <p>2. Choose your preferred WiFi package.</p>
-<p>3. Contact our support team for payment and access instructions.</p>
-<p>4. Connect and enjoy fast internet.</p>
+<p>3. Make payment to the displayed account.</p>
+<p>4. Submit your payment confirmation on WhatsApp.</p>
+<p>5. After payment verification, receive your WiFi voucher.</p>
+<p>6. Connect to your hostel WiFi using your voucher.</p>
 </div>
 
-<div class="card">
-<h2>Customer Support</h2>
-<p>Need assistance? Contact Barham Network.</p>
-<button class="whatsapp" onclick="contactSupport()">Chat on WhatsApp</button>
+<div class="section">
+<h2>Need Assistance?</h2>
+<p>Our support team is available to help with payment and connection enquiries.</p>
+
+<a class="whatsapp"
+style="display:block;text-align:center;padding:14px;text-decoration:none;border-radius:7px;"
+href="https://wa.me/2349132029328"
+target="_blank">
+Chat with Barham Network
+</a>
 </div>
 
 </div>
 
 <footer>
-© 2026 Barham Network. All Rights Reserved.
+<p><strong>BARHAM NETWORK</strong></p>
+<p>Fast. Reliable. Affordable.</p>
+<p>Connecting Students, One Hostel at a Time.</p>
 </footer>
 
+<a class="floating-whatsapp"
+href="https://wa.me/2349132029328"
+target="_blank">
+WhatsApp Support
+</a>
+
 <script>
-function showHostel() {
-const hostel = document.getElementById("hostel").value;
-const packages = document.getElementById("packages");
 
-if (hostel) {
-packages.style.display = "block";
-document.getElementById("hostelName").innerText = hostel + " WiFi";
-} else {
-packages.style.display = "none";
+let currentHostel = "";
+let currentPrice = "";
+let currentData = "";
+let currentValidity = "";
+let currentDevices = "";
+let currentAccount = "";
+
+const accounts = {
+"Heritage Hostel": {
+bank: "Paga",
+name: "Ajeigbe Ibrahim Abolaji",
+number: "2914835071"
+},
+
+"Awesome Hostel": {
+bank: "Moniepoint MFB",
+name: "Ajeigbe Ibrahim Abolaji",
+number: "3002993760"
 }
+};
+
+function changeHostel() {
+
+currentHostel = document.getElementById("hostel").value;
+
+document.getElementById("paymentSection").classList.add("hidden");
+
+if (!currentHostel) {
+document.getElementById("packageSection").classList.add("hidden");
+return;
 }
 
-function contactSupport() {
-const hostel = document.getElementById("hostel").value;
-const message = encodeURIComponent(
-"Hello Barham Network, I need assistance with WiFi at " +
-(hostel || "my hostel") + "."
-);
+document.getElementById("packageSection").classList.remove("hidden");
 
-window.open("https://wa.me/234XXXXXXXXXX?text=" + message, "_blank");
+document.getElementById("packageSection").scrollIntoView({
+behavior: "smooth"
+});
 }
+
+function selectPackage(price, data, validity, devices) {
+
+currentPrice = price;
+currentData = data;
+currentValidity = validity;
+currentDevices = devices;
+
+const account = accounts[currentHostel];
+
+currentAccount = account.number;
+
+document.getElementById("selectedHostel").textContent = currentHostel;
+document.getElementById("selectedPrice").textContent = price;
+document.getElementById("selectedData").textContent = data;
+document.getElementById("selectedValidity").textContent = validity;
+document.getElementById("selectedDevices").textContent = devices;
+
+document.getElementById("bankName").textContent = account.bank;
+document.getElementById("accountName").textContent = account.name;
+document.getElementById("accountNumber").textContent = account.number;
+
+document.getElementById("paymentSection").classList.remove("hidden");
+
+document.getElementById("paymentSection").scrollIntoView({
+behavior: "smooth"
+});
+}
+
+function copyAccount() {
+
+navigator.clipboard.writeText(currentAccount)
+.then(() => {
+alert("Account number copied successfully!");
+})
+.catch(() => {
+alert("Please copy the account number manually: " + currentAccount);
+});
+}
+
+function confirmPayment() {
+
+const name = document.getElementById("studentName").value.trim();
+const phone = document.getElementById("studentPhone").value.trim();
+
+if (!name || !phone) {
+alert("Please enter your name and phone number.");
+return;
+}
+
+const message =
+"Hello Barham Network, I have made a payment. Please verify my payment.\n\n" +
+"Name: " + name + "\n" +
+"Phone: " + phone + "\n" +
+"Hostel: " + currentHostel + "\n" +
+"Package: " + currentPrice + "\n" +
+"Data: " + currentData + "\n" +
+"Validity: " + currentValidity + "\n" +
+"Devices: " + currentDevices + "\n\n" +
+"Please verify my transfer and issue my WiFi voucher.";
+
+const whatsappURL =
+"https://wa.me/2349132029328?text=" +
+encodeURIComponent(message);
+
+window.open(whatsappURL, "_blank");
+}
+
 </script>
 
 </body>
